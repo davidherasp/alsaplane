@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 05-12-2016 a las 13:39:16
+-- Tiempo de generación: 06-12-2016 a las 01:40:12
 -- Versión del servidor: 10.1.19-MariaDB
 -- Versión de PHP: 7.0.9
 
@@ -25,6 +25,24 @@ USE `alsaplane`;
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `administrador`
+--
+
+CREATE TABLE `administrador` (
+  `user` varchar(30) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
+  `password` varchar(30) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `administrador`
+--
+
+INSERT INTO `administrador` (`user`, `password`) VALUES
+('admin', 'admin');
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `aviones`
 --
 
@@ -33,6 +51,14 @@ CREATE TABLE `aviones` (
   `modelo` varchar(30) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
   `numAsientos` int(3) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `aviones`
+--
+
+INSERT INTO `aviones` (`idAvion`, `modelo`, `numAsientos`) VALUES
+(1, 'Boeing B737', 300),
+(2, 'Airbus A319', 200);
 
 -- --------------------------------------------------------
 
@@ -45,9 +71,18 @@ CREATE TABLE `clientes` (
   `nombreCli` varchar(30) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
   `fechaNacCli` date NOT NULL,
   `emailCli` varchar(40) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
-  `tipoCli` tinyint(1) NOT NULL,
+  `tipoCli` enum('premium','standard') NOT NULL,
   `password` varchar(20) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `clientes`
+--
+
+INSERT INTO `clientes` (`dni`, `nombreCli`, `fechaNacCli`, `emailCli`, `tipoCli`, `password`) VALUES
+('70707070r', 'Cliente1', '1995-11-05', 'cliente1@email.com', 'standard', 'cliente1'),
+('70707071r', 'Cliente1', '1992-12-12', 'cliente2@email.com', 'premium', 'cliente2'),
+('70707072r', 'Cliente3', '1990-12-11', 'cliente3@email.com', 'premium', 'cliente3');
 
 -- --------------------------------------------------------
 
@@ -60,6 +95,15 @@ CREATE TABLE `lineaTripulacion` (
   `idVuelo` varchar(7) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Volcado de datos para la tabla `lineaTripulacion`
+--
+
+INSERT INTO `lineaTripulacion` (`idTrabajador`, `idVuelo`) VALUES
+(1, 'IBE2525'),
+(2, 'IBE2525'),
+(3, 'IBE2525');
+
 -- --------------------------------------------------------
 
 --
@@ -69,9 +113,17 @@ CREATE TABLE `lineaTripulacion` (
 CREATE TABLE `reservas` (
   `idVuelo` varchar(7) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
   `idCliente` varchar(9) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
-  `precioR` decimal(4,2) NOT NULL,
+  `precioR` decimal(6,2) NOT NULL,
   `asiento` int(3) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `reservas`
+--
+
+INSERT INTO `reservas` (`idVuelo`, `idCliente`, `precioR`, `asiento`) VALUES
+('IBE2525', '70707070r', '90.00', 150),
+('IBE2525', '70707071r', '81.00', 100);
 
 -- --------------------------------------------------------
 
@@ -87,6 +139,15 @@ CREATE TABLE `trabajadores` (
   `rolTra` enum('piloto','copiloto','auxiliar') CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Volcado de datos para la tabla `trabajadores`
+--
+
+INSERT INTO `trabajadores` (`idTrabajador`, `nombreTra`, `apellidosTra`, `fechaNacTra`, `rolTra`) VALUES
+(1, 'Trabajador1 Piloto', 'Apellidos1', '1989-12-07', 'piloto'),
+(2, 'Trabajador2 Copiloto', 'Apellidos2', '1991-11-09', 'copiloto'),
+(3, 'Trabajador3 Auxiliar', 'Apellidos3', '1986-09-21', 'auxiliar');
+
 -- --------------------------------------------------------
 
 --
@@ -98,8 +159,16 @@ CREATE TABLE `vuelos` (
   `idAvion` int(5) NOT NULL,
   `origen` varchar(20) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
   `destino` varchar(20) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
-  `precioV` decimal(4,2) NOT NULL
+  `precioV` decimal(6,2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `vuelos`
+--
+
+INSERT INTO `vuelos` (`idVuelo`, `idAvion`, `origen`, `destino`, `precioV`) VALUES
+('IBE2525', 1, 'Madrid', 'Barcelona', '90.00'),
+('RAY4040', 2, 'Londres', 'Valladolid', '120.99');
 
 --
 -- Índices para tablas volcadas
@@ -157,12 +226,12 @@ ALTER TABLE `vuelos`
 -- AUTO_INCREMENT de la tabla `aviones`
 --
 ALTER TABLE `aviones`
-  MODIFY `idAvion` int(5) NOT NULL AUTO_INCREMENT;
+  MODIFY `idAvion` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT de la tabla `trabajadores`
 --
 ALTER TABLE `trabajadores`
-  MODIFY `idTrabajador` int(5) NOT NULL AUTO_INCREMENT;
+  MODIFY `idTrabajador` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- Restricciones para tablas volcadas
 --
