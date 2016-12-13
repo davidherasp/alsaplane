@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 06-12-2016 a las 01:40:12
+-- Tiempo de generación: 13-12-2016 a las 12:41:33
 -- Versión del servidor: 10.1.19-MariaDB
 -- Versión de PHP: 7.0.9
 
@@ -80,9 +80,12 @@ CREATE TABLE `clientes` (
 --
 
 INSERT INTO `clientes` (`dni`, `nombreCli`, `fechaNacCli`, `emailCli`, `tipoCli`, `password`) VALUES
-('70707070r', 'Cliente1', '1995-11-05', 'cliente1@email.com', 'standard', 'cliente1'),
-('70707071r', 'Cliente1', '1992-12-12', 'cliente2@email.com', 'premium', 'cliente2'),
-('70707072r', 'Cliente3', '1990-12-11', 'cliente3@email.com', 'premium', 'cliente3');
+('60606060r', 'guilleeee', '1991-01-01', 'guille3@test.com', 'premium', 'guille2'),
+('70707070r', 'actualizado', '1995-11-05', 'actualizado@gmail.com', 'standard', 'cliente1'),
+('70707071r', 'Cliente2', '1992-12-12', 'cliente2@email.com', 'premium', 'cliente2'),
+('70707072r', 'Cliente3', '1990-12-11', 'cliente3@email.com', 'standard', 'cliente3'),
+('70707074r', 'clientee', '0000-00-00', 'email@cliente4.com', 'premium', 'cliente4'),
+('90909090r', 'guille', '1991-11-01', 'guille2@email.com', 'premium', 'guille');
 
 -- --------------------------------------------------------
 
@@ -123,7 +126,10 @@ CREATE TABLE `reservas` (
 
 INSERT INTO `reservas` (`idVuelo`, `idCliente`, `precioR`, `asiento`) VALUES
 ('IBE2525', '70707070r', '90.00', 150),
-('IBE2525', '70707071r', '81.00', 100);
+('IBE2525', '70707071r', '81.00', 100),
+('RAY4040', '70707070r', '120.99', 12),
+('RAY4040', '70707072r', '120.99', 10),
+('RAY4040', '70707074r', '108.89', 11);
 
 -- --------------------------------------------------------
 
@@ -159,6 +165,7 @@ CREATE TABLE `vuelos` (
   `idAvion` int(5) NOT NULL,
   `origen` varchar(20) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
   `destino` varchar(20) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
+  `fechaVuelo` date NOT NULL,
   `precioV` decimal(6,2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -166,9 +173,10 @@ CREATE TABLE `vuelos` (
 -- Volcado de datos para la tabla `vuelos`
 --
 
-INSERT INTO `vuelos` (`idVuelo`, `idAvion`, `origen`, `destino`, `precioV`) VALUES
-('IBE2525', 1, 'Madrid', 'Barcelona', '90.00'),
-('RAY4040', 2, 'Londres', 'Valladolid', '120.99');
+INSERT INTO `vuelos` (`idVuelo`, `idAvion`, `origen`, `destino`, `fechaVuelo`, `precioV`) VALUES
+('IBE2525', 1, 'Madrid', 'Barcelona', '2017-01-03', '90.00'),
+('IBE9090', 2, 'Madrid', 'Paris', '2017-01-04', '130.00'),
+('RAY4040', 2, 'Londres', 'Valladolid', '2016-12-29', '120.99');
 
 --
 -- Índices para tablas volcadas
