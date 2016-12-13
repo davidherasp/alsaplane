@@ -2,66 +2,42 @@
 include("modelo.php"); //Con la ruta donde esta
 session_start();
 
-$modelo = new Modelo();
-//Con el idVuelo que pasamos en la URL consultamos todos los datos
-$vuelo = $modelo->selectVuelo($_GET['idVuelo']);
 
-$idVuelo    = $vuelo['idVuelo'];
-$idAvion    = $vuelo['idAvion'];
-$origen     = $vuelo['origen'];
-$destino    = $vuelo['destino'];
-$precioV    = $vuelo['precioV'];
-
-$nombreCli  = $_SESSION['nombreCli'];
-$dni        = $_SESSION['dni'];
+$idVuelo    = $_SESSION['idVuelo'];
+$idCliente  = $_SESSION['dni'];
+$precioR    = $_SESSION['precioV'];
+$asiento    = $_SESSION['asiento'];
 $tipoCli    = $_SESSION['tipoCli'];
 
-$asiento    = $_GET['asiento']
-?>        
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <title></title>
-    </head>
-    <body>
-        
-        <?php
-        
-        //Comprobamos si existe la variable de sesion nombreCli
-        //Que nos indica si ya se ha registrado el cliente
-        if (isset($_SESSION['nombreCli'])) {
-            ?>
-                
-                <p>Nombre Cliente: <?php echo $nombreCli?></p>
-                <p>DNI: <?php echo $dni?></p>
-                <p>Tipo Cliente: <?php echo $tipoCli?></p>
-                <p>ID Avion: <?php echo $idAvion?></p>
-                <p>ID Vuelo: <?php echo $idVuelo?></p>
-                <p>Origen: <?php echo $origen?></p>
-                <p>Destino: <?php echo $destino?></p>
-                <p>Asiento: <?php echo $asiento?></p>
-                
-                <?php 
-                
-                    if(strcmp($tipoCli, "premium")==0){
-                        ?><p>Precio especial premium: <?php echo $precioV*0.9?></p><?php
-                    }else{
-                        ?><p>Precio: <?php echo $precioV?></p><?php
-                    }
-                ?>
-                
-                
-                <a><button  name = "boton" value="Confirmar">Confirmar</button></a>
-                
-                
-            <?php
-        }else{
-                //Muestro alert
-                echo ("<SCRIPT LANGUAGE='JavaScript'>
-                        window.alert('Para hacer una reserva tiene que registrarse')
-                        window.location.href='acceso.html';
-                    </SCRIPT>");
-        }?>
+//Hacemos la rebaja del precio si el tipo del cliente es premium.
+if(strcmp($tipoCli,"premium")==0){
+    $precioR = $precioR * 0.9;
+}
 
-    </body>
-</html>
+echo '--->'.$idVuelo.'-'.$idCliente.'-'.$precioR.'-'.$asiento;
+
+$modelo = new Modelo();
+$result = $modelo->insertReserva($idVuelo,$idCliente,$precioR,$asiento);
+
+//window.location.href='resumenReserva.php';
+//window.location.href='index.php';
+
+if($result != NULL){
+    
+    //Muestro alert reserva confirmada
+                echo ("<SCRIPT LANGUAGE='JavaScript'>
+                        window.alert('Se ha realizado la reserva con éxito')
+                        window.location.href='index.php';
+                    </SCRIPT>");
+                $_SESSION['confirmacionReserva'] = "true";
+}else{
+    
+    //Muestro alert
+                echo ("<SCRIPT LANGUAGE='JavaScript'>
+                        window.alert('Se ha producido un error al realizar la reserva')
+                        window.location.href='index.php';
+                    </SCRIPT>");
+    
+}
+
+?>        

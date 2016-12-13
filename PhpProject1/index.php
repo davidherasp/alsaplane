@@ -18,6 +18,7 @@ session_start();
                 <!--Y mostramos su nombre-->
                 <h3><?php echo $_SESSION['nombreCli']?></h3>
                 <a href="cerrarSesion.php">Cerrar sesion</a>
+                <a href="micuenta.php">Mi cuenta</a>
             <?php
         }
         
@@ -32,6 +33,7 @@ session_start();
                 <th>Avion ID</th>
                 <th>Origen</th>
                 <th>Destino</th>
+                <th>Fecha</th>
                 <th>Precio</th>
             </tr>
             <?php 
@@ -39,15 +41,19 @@ session_start();
                 
                 //Creamos la url para cada vuelo
                 $url = "reserva.php?idVuelo=".$vuelo['idVuelo'];
-                ?><tr>
+                ?>
+            
+            <tr>
                     <td><?php echo $vuelo['idVuelo']?></td>
                     <td><?php echo $vuelo['idAvion']?></td>
                     <td><?php echo $vuelo['origen']?></td>
                     <td><?php echo $vuelo['destino']?></td>
-                    <td><?php echo $vuelo['precioV']?></td>
+                    <td><?php echo $vuelo['fechaVuelo']?></td>
                     <td><?php echo $vuelo['precioV']?></td>
                     <td><a href="<?php echo $url ?>"><button  name = "boton" value="Reservar">Reservar</button></a></td>
-                <?php    
+                
+            </tr>
+                 <?php    
             }
             ?>
             </table>
@@ -65,7 +71,7 @@ session_start();
         if (!isset($_SESSION['nombreCli'])) {
             ?>
                 <a href="acceso.html"><button  name = "boton" value="Accede">Accede</button></a>
-                <a href="registro.html"><button  name = "boton" value="Registro">Registro</button></a>
+                <a href="registro.php"><button  name = "boton" value="Registro">Registro</button></a>
             <?php
         } 
 
