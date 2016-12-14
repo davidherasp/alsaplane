@@ -14,7 +14,7 @@ session_start();
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/css/bootstrap.min.css" integrity="sha384-AysaV+vQoT3kOAXZkl02PThvDr8HYKPZhNT5h/CXfBThSRXQ6jW5DO2ekP5ViFdi" crossorigin="anonymous">
   
-  <title>Alsaplane empleados</title>
+  <title>Alsaplane reservas</title>
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 <body>
@@ -33,31 +33,29 @@ session_start();
     <div class="container">
 <?php 
     $modelo = new Modelo();
-    $empleados = $modelo->selectEmpleados();
+    $reservas = $modelo->selectReservas();
     
-    if ($empleados != NULL)
+    if ($reservas != NULL)
     {
         ?>
         <table class="table table-hover">
         <thead class="thead-inverse">
             <tr>
-                <th>ID</th>
-                <th>Nombre</th>
-                <th>Apellidos</th>
-                <th>Fecha nacimiento</th>
-                <th>Rol</th>
+                <th>ID vuelo</th>
+                <th>ID cliente</th>
+                <th>Precio reserva</th>
+                <th>Asiento</th>
                 <th>Opciones</th>
             </tr>
         </thead>
         <tbody>
         <?php 
-        foreach ($empleados as $empelado) {
+        foreach ($reservas as $reserva) {
             ?><tr>
-                <td><?php echo $empelado['idTrabajador']?></td>
-                <td><?php echo $empelado['nombreTra']?></td>
-                <td><?php echo $empelado['apellidosTra']?></td>
-                <td><?php echo $empelado['fechaNacTra']?></td>
-                <td><?php echo $empelado['rolTra']?></td>
+                <td><?php echo $reserva['idVuelo']?></td>
+                <td><?php echo $reserva['idCliente']?></td>
+                <td><?php echo $reserva['precioR']?></td>
+                <td><?php echo $reserva['asiento']?></td>
                 <td>
                     <a href="#"><button  name = "boton" value="editar">Modificar</button></a>
                     <a href="#"><button  name = "boton" value="editar">Eliminar</button></a>
@@ -71,7 +69,7 @@ session_start();
     } 
     else
     {
-        echo 'No existen empleados en la base de datos';
+        echo 'No existen reservas en la base de datos';
     }
 ?>
     </div>

@@ -31,7 +31,7 @@ class Modelo{
             public function selectVuelos(){
                 
                 $this->open();
-                $consulta="SELECT idVuelo,idAvion,origen,destino,precioV FROM vuelos";
+                $consulta="SELECT idVuelo,idAvion,origen,destino,fechaVuelo,precioV FROM vuelos";
                 
                 $rs =  mysqli_query($this->conexion,$consulta);
                 $nfilas = mysqli_num_rows($rs);
@@ -47,6 +47,33 @@ class Modelo{
                     
                     $this->close();
                     return $vuelos;
+                
+                }else{
+                        
+                    $this->close();
+                    return NULL;
+                }
+            }
+            
+            public function selectReservas(){
+                
+                $this->open();
+                $consulta="SELECT idVuelo, idCliente, precioR, asiento FROM reservas";
+                
+                $rs =  mysqli_query($this->conexion,$consulta);
+                $nfilas = mysqli_num_rows($rs);
+                
+                if($nfilas != 0){
+                    
+                    $reservas = array();
+                    $i=0;
+                    while ($reg=mysqli_fetch_array($rs)){
+                        $reservas[$i]=$reg;
+                        $i++;
+                    }
+                    
+                    $this->close();
+                    return $reservas;
                 
                 }else{
                         

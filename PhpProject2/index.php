@@ -38,7 +38,7 @@ $modelo = new Modelo();
             </div>
             <div class="row">
                 <div class="col-xs-12 col-sm-6 col-lg-4">
-                <div class="card" style="width: 320px">
+                <div class="card" style="width: 322px">
                   <img class="card-img-top" src="./images/vuelos.jpg" alt="Card image cap">
                   <div class="card-block">
                     <h4 class="card-title">Vuelos</h4>
@@ -47,9 +47,20 @@ $modelo = new Modelo();
                   </div>
                 </div>
                 </div>
+                
+                <div class="col-xs-12 col-sm-6 col-lg-4">
+                <div class="card" style="width: 322px">
+                  <img class="card-img-top" src="./images/reservas.jpg" alt="Card image cap">
+                  <div class="card-block">
+                    <h4 class="card-title">Reservas</h4>
+                    <p class="card-text">Gestiona las reservas.</p>
+                    <a href="./reservas.php" class="btn btn-primary">Ver reservas</a>
+                  </div>
+                </div>
+                </div>
 
                 <div class="col-xs-12 col-sm-6 col-lg-4">
-                <div class="card" style="width: 320px">
+                <div class="card" style="width: 322px">
                   <img class="card-img-top" src="./images/avion.jpg" alt="Card image cap">
                   <div class="card-block">
                     <h4 class="card-title">Aviones</h4>
@@ -60,7 +71,7 @@ $modelo = new Modelo();
                 </div>
 
                 <div class="col-xs-12 col-sm-6 col-lg-4">
-                <div class="card" style="width: 320px">
+                <div class="card" style="width: 322px">
                   <img class="card-img-top" src="./images/empleados.jpg" alt="Card image cap">
                   <div class="card-block">
                     <h4 class="card-title">Empleados</h4>

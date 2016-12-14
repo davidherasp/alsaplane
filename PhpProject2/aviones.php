@@ -33,9 +33,9 @@ session_start();
     <div class="container">
 <?php 
     $modelo = new Modelo();
-    $empleados = $modelo->selectAviones();
+    $aviones = $modelo->selectAviones();
     
-    if ($empleados != NULL)
+    if ($aviones != NULL)
     {
         ?>
         <table class="table table-hover">
@@ -49,12 +49,17 @@ session_start();
         </thead>
         <tbody>
         <?php 
-        foreach ($empleados as $empelado) {
+        foreach ($aviones as $avion) {
+            $urlModificar = "modificarAvion.php?idAvion=".$avion['idAvion'];
+            $urlEliminar = "eliminarAvion.php?idAvion=".$avion['idAvion'];
             ?><tr>
-                <td><?php echo $empelado['idAvion']?></td>
-                <td><?php echo $empelado['modelo']?></td>
-                <td><?php echo $empelado['numAsientos']?></td>
-                <td><a href="#"><button  name = "boton" value="editar">Editar</button></a></td>
+                <td><?php echo $avion['idAvion']?></td>
+                <td><?php echo $avion['modelo']?></td>
+                <td><?php echo $avion['numAsientos']?></td>
+                <td>
+                    <a href="<?php echo $urlModificar ?>"><button  name = "boton" value="editar">Modificar</button></a>
+                    <a href="<?php echo $urlEliminar ?>"><button  name = "boton" value="editar">Eliminar</button></a>
+                </td>
             <?php    
         }
         ?>

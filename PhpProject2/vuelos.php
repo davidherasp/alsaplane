@@ -45,8 +45,8 @@ session_start();
                 <th>Avion ID</th>
                 <th>Origen</th>
                 <th>Destino</th>
+                <th>Fecha</th>
                 <th>Precio</th>
-                <th>PrecioV</th>
                 <th>Opciones</th>
             </tr>
         </thead>
@@ -58,9 +58,12 @@ session_start();
                 <td><?php echo $vuelo['idAvion']?></td>
                 <td><?php echo $vuelo['origen']?></td>
                 <td><?php echo $vuelo['destino']?></td>
+                <td><?php echo $vuelo['fechaVuelo']?></td>
                 <td><?php echo $vuelo['precioV']?></td>
-                <td><?php echo $vuelo['precioV']?></td>
-                <td><a href="#"><button  name = "boton" value="editar">Editar</button></a></td>
+                <td>
+                    <a href="#"><button  name = "boton" value="editar">Modificar</button></a>
+                    <a href="#"><button  name = "boton" value="editar">Eliminar</button></a>
+                </td>
             <?php    
         }
         ?>
