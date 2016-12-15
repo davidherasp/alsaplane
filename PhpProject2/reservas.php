@@ -51,14 +51,16 @@ session_start();
         <tbody>
         <?php 
         foreach ($reservas as $reserva) {
+            $urlModificar = "modificarReserva.php?idVuelo=".$reserva['idVuelo']."&idCliente=".$reserva['idCliente'];
+            $urlEliminar = "eliminarReserva.php?idVuelo=".$reserva['idVuelo']."&idCliente=".$reserva['idCliente'];
             ?><tr>
                 <td><?php echo $reserva['idVuelo']?></td>
                 <td><?php echo $reserva['idCliente']?></td>
                 <td><?php echo $reserva['precioR']?></td>
                 <td><?php echo $reserva['asiento']?></td>
                 <td>
-                    <a href="#"><button  name = "boton" value="editar">Modificar</button></a>
-                    <a href="#"><button  name = "boton" value="editar">Eliminar</button></a>
+                    <a href="<?php echo $urlModificar ?>"><button  name = "boton" value="editar">Modificar</button></a>
+                    <a href="<?php echo $urlEliminar ?>"><button  name = "boton" value="eliminar">Eliminar</button></a>
                 </td>
             <?php    
         }

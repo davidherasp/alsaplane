@@ -151,11 +151,11 @@ class Modelo{
                 } 
             }  
             
-            public function eliminarReserva($idReserva)
+            public function eliminarReserva($idVuelo, $idCliente)
             {
                 $this->open();
                 
-                $consulta="DELETE FROM RESERVAS WHERE (idReserva LIKE '$idReserva')";
+                $consulta="DELETE FROM RESERVAS WHERE (idVuelo LIKE '$idVuelo') AND (idCliente LIKE '$idCliente')";
                 
                 
                 $result=mysqli_query($this->conexion,$consulta);

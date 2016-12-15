@@ -2,11 +2,12 @@
 session_start();
 include("modelo.php");
 
-$idReserva = $_GET['idReserva'];
+$idVuelo = $_GET['idVuelo'];
+$idCliente = $_GET['idCliente'];
 
-echo '--->'.$idReserva;
+echo '--->'.$idVuelo." - ".$idCliente;
 $modelo = new Modelo();
-$result = $modelo->eliminarReserva($idReserva);
+$result = $modelo->eliminarReserva($idVuelo, $idCliente);
 
 if($result != NULL){
     echo ("<SCRIPT LANGUAGE='JavaScript'>
