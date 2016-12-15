@@ -15,7 +15,7 @@ if($result != NULL){
            </SCRIPT>");
 }else{
     echo ("<SCRIPT LANGUAGE='JavaScript'>
-                    window.alert('Se ha producido un error al eliminar el avión')
+                    window.alert('Se ha producido un error al eliminar el vuelo')
                     window.location.href='vuelos.php';
            </SCRIPT>");
 }

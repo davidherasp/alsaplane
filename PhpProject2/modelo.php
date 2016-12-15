@@ -134,105 +134,72 @@ class Modelo{
                 }
             }
             
-            public function loginCliente($dni,$clave){
-                
+            public function eliminarVuelo($idVuelo)
+            {
                 $this->open();
-                $consulta="SELECT dni,nombreCli,fechaNacCli,emailCli,tipoCli,password FROM clientes WHERE (dni LIKE '$dni') and (password LIKE '$clave')";
                 
-                $rs =  mysqli_query($this->conexion,$consulta);
-                if(mysqli_num_rows($rs) != 0)
-                {
-                    $cliente = mysqli_fetch_array($rs);
-                    $this->close();
-                    return $cliente;
+                $consulta="DELETE FROM VUELOS WHERE (idVuelo LIKE '$idVuelo')";
                 
-                }else
-                {
-                    $this->close();
-                    return NULL;
-                }
-            
-            }
-            
-            public function selectVuelo($idVuelo){
-                
-                $this->open();
-                $consulta="SELECT idVuelo,idAvion,origen,destino,precioV FROM vuelos WHERE (idVuelo LIKE '$idVuelo')";
-                
-                $rs =  mysqli_query($this->conexion,$consulta);
-                if(mysqli_num_rows($rs) != 0)
-                {
-                    $vuelo = mysqli_fetch_array($rs);
-                    $this->close();
-                    return $vuelo;
-                
-                }else
-                {
-                    $this->close();
-                    return NULL;
-                }
-            
-            }           
-            
-            public function selectAsientosAvion($idAvion){
-                
-                $this->open();
-                $consulta="SELECT modelo,numAsientos FROM aviones WHERE (idAvion LIKE '$idAvion')";
-                
-                $rs =  mysqli_query($this->conexion,$consulta);
-                if(mysqli_num_rows($rs) != 0)
-                {
-                    $avion = mysqli_fetch_array($rs);
-                    $this->close();
-                    return $avion;
-                
-                }else
-                {
-                    $this->close();
-                    return NULL;
-                }
-            
-            }
-            
-            public function selectNumerosAsientosVuelo($idVuelo){
-                
-                $this->open();
-                $consulta="SELECT asiento FROM reservas WHERE (idVuelo LIKE '$idVuelo')";
-                
-                $rs =  mysqli_query($this->conexion,$consulta);
-                $nReservas = mysqli_num_rows($rs);
-                
-                if($nReservas != 0){
-                    
-                    $asientosReservados = array();
-                    $i=0;
-                    while ($reg=mysqli_fetch_array($rs)){
-                        $asientosReservados[$i]=$reg;
-                        $i++;
-                    }
-                    
-                    $this->close();
-                    return $asientosReservados;
-                
-                }else{
-                        
-                    $this->close();
-                    return NULL;
-                }
-
-            
-            }
-           
-            public function insertCliente($dni, $nombreCli, $fechaNacCli, $emailCli, $tipoCli, $password){
-                
-                $this->open();
-                $consulta="INSERT INTO clientes ( dni,       nombreCli,       fechaNacCli,       emailCli,       tipoCli,      password)
-                                      VALUES ('".$dni."','".$nombreCli."','".$fechaNacCli."','".$emailCli."','".$tipoCli."','".$password."');";
                 
                 $result=mysqli_query($this->conexion,$consulta);
                 $this->close();
                 
+                if ($result){
+                    return $result;
+                }else{
+                    return NULL;
+                } 
+            }  
+            
+            public function eliminarReserva($idReserva)
+            {
+                $this->open();
+                
+                $consulta="DELETE FROM RESERVAS WHERE (idReserva LIKE '$idReserva')";
+                
+                
+                $result=mysqli_query($this->conexion,$consulta);
+                $this->close();
+                
+                if ($result){
+                    return $result;
+                }else{
+                    return NULL;
+                } 
             }
             
+            public function eliminarAvion($idAvion)
+            {
+                $this->open();
+                
+                $consulta="DELETE FROM AVIONES WHERE (idAvion LIKE '$idAvion')";
+                
+                
+                $result=mysqli_query($this->conexion,$consulta);
+                $this->close();
+                
+                if ($result){
+                    return $result;
+                }else{
+                    return NULL;
+                } 
+            }
+            
+            public function eliminarEmpleado($idTrabajador)
+            {
+                $this->open();
+                
+                $consulta="DELETE FROM TRABAJADORES WHERE (idTrabajador LIKE '$idTrabajador')";
+                
+                
+                $result=mysqli_query($this->conexion,$consulta);
+                $this->close();
+                
+                if ($result){
+                    return $result;
+                }else{
+                    return NULL;
+                } 
+            }
 }//class modelo
 

@@ -53,6 +53,8 @@ session_start();
         <tbody>
         <?php 
         foreach ($vuelos as $vuelo) {
+            $urlModificar = "modificarVuelo.php?idVuelo=".$vuelo['idVuelo'];
+            $urlEliminar = "eliminarVuelo.php?idVuelo=".$vuelo['idVuelo'];
             ?><tr>
                 <td><?php echo $vuelo['idVuelo']?></td>
                 <td><?php echo $vuelo['idAvion']?></td>
@@ -61,8 +63,8 @@ session_start();
                 <td><?php echo $vuelo['fechaVuelo']?></td>
                 <td><?php echo $vuelo['precioV']?></td>
                 <td>
-                    <a href="#"><button  name = "boton" value="editar">Modificar</button></a>
-                    <a href="#"><button  name = "boton" value="editar">Eliminar</button></a>
+                    <a href="<?php echo $urlModificar ?>"><button  name = "boton" value="editar">Modificar</button></a>
+                    <a href="<?php echo $urlEliminar ?>"><button  name = "boton" value="editar">Eliminar</button></a>
                 </td>
             <?php    
         }

@@ -4,12 +4,8 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/xampp/htdocs/PhpProject2/eliminarVuelo.php</file>
-            <file>file:/C:/xampp/htdocs/PhpProject2/login.php</file>
-            <file>file:/C:/xampp/htdocs/PhpProject2/eliminarAvion.php</file>
-            <file>file:/C:/xampp/htdocs/PhpProject2/eliminarEmpleado.php</file>
+            <file>file:/C:/xampp/htdocs/PhpProject2/modelo.php</file>
             <file>file:/C:/xampp/htdocs/PhpProject2/aviones.php</file>
-            <file>file:/C:/xampp/htdocs/PhpProject2/eliminarReserva.php</file>
-            <file>file:/C:/xampp/htdocs/PhpProject2/index.php</file>
             <file>file:/C:/xampp/htdocs/PhpProject2/vuelos.php</file>
         </group>
     </open-files>
