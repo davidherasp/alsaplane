@@ -201,5 +201,29 @@ class Modelo{
                     return NULL;
                 } 
             }
+            
+            public function insertEmpleado($nombre, $apellidos, $fechaNac, $rol)
+            {
+                $this->open();
+                
+                $consulta="INSERT INTO trabajadores ( nombreTra,apellidosTra,fechaNacTra,rolTra)
+                           VALUES ('".$nombre."','".$apellidos."','".$fechaNac."','".$rol."');";
+                
+                $result=mysqli_query($this->conexion,$consulta);
+                $this->close();
+            }
+            
+            public function modificarEmpleado($id, $rol)
+            {
+                $this->open();
+                
+                $consulta="UPDATE trabajadores "
+                        . "SET rolTra='".$rol."' "
+                        . "WHERE idTrabajador=".$id." ";
+                
+//                echo $consulta;
+                $result=mysqli_query($this->conexion,$consulta);
+                $this->close();
+            }
 }//class modelo
 
