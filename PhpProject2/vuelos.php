@@ -32,11 +32,13 @@ session_start();
     
     <div class="container">
         <nav class="navbar">
+            <h1>Vuelos</h1>
             <button class="btn btn-outline-success float-xs-right" type="button" data-toggle="modal" data-target="#addModal">Añadir</button>
         </nav>
 <?php 
     $modelo = new Modelo();
     $vuelos = $modelo->selectVuelos();
+    $aviones= $modelo->selectAviones();
     
     if ($vuelos != NULL)
     {
@@ -66,9 +68,47 @@ session_start();
                 <td><?php echo $vuelo['fechaVuelo']?></td>
                 <td><?php echo $vuelo['precioV']?></td>
                 <td>
-                    <a href="<?php echo $urlModificar ?>"><button  name = "boton" value="editar">Modificar</button></a>
+                    <a><button type="button" data-toggle="modal" data-target="#modificar<?php echo $vuelo['idVuelo'] ?>" value="editar">Modificar</button></a>
                     <a href="<?php echo $urlEliminar ?>"><button  name = "boton" value="editar">Eliminar</button></a>
                 </td>
+              </tr> 
+                
+                <div class="modal fade" id="modificar<?php echo $vuelo['idVuelo'] ?>" tabindex="-1" role="dialog" aria-labelledby="Modal para añadir" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                        <h4 class="modal-title">Modificar el vuelo <?php echo $vuelo['idVuelo'] ?></h4>
+                      </div>
+                      <form action="modificarVuelo.php" method="POST"> 
+                        <div class="modal-body">
+                            <input type="hidden" name="id" value="<?php echo $vuelo['idVuelo'] ?>">
+                            <div class="form-group row">
+                                <label for="example-date-input" class="col-xs-3 col-form-label">Fecha vuelo</label>
+                                <div class="col-xs-9">
+                                  <input class="form-control" type="date" value="<?php echo $vuelo['fechaVuelo'] ?>" name="fecha">
+                                </div>
+                            </div>
+                            <div class="form-group row form-inline">
+                                <label class="col-xs-2 col-form-label" for="inputPrecio">Precio</label>
+                                <div class="input-group col-xs-8">
+                                    <div class="input-group-addon">€</div>
+                                    <input type="text" class="form-control" id="inputPrecio" placeholder="0" name="precio1">
+                                    <div class="input-group-addon">.</div>
+                                    <input type="text" class="form-control" id="inputPrecio" placeholder="00" name="precio2">
+                                </div>
+                            </div>
+                          </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                          <button type="submit" class="btn btn-primary">Guardar</button>
+                        </div>
+                        </form>
+                    </div><!-- /.modal-content -->
+                  </div><!-- /.modal-dialog -->
+                </div><!-- /.modal -->
             <?php    
         }
         ?>
@@ -90,15 +130,60 @@ session_start();
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
-            <h4 class="modal-title">Añadir un empleado</h4>
+            <h4 class="modal-title">Añadir un vuelo</h4>
           </div>
-          <div class="modal-body">
-            <p>One fine body&hellip;</p>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary">Save changes</button>
-          </div>
+          <form action="insertVuelo.php" method="POST"> 
+            <div class="modal-body">
+                <div class="form-group row">
+                  <label for="inputIdVuelo" class="col-xs-2 col-form-label">ID Vuelo</label>
+                  <div class="col-xs-10">
+                      <input type="text" class="form-control" id="inputIdVuelo" placeholder="" name="idVuelo">
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label for="inputIdAvion" class="col-xs-4 col-form-label">ID Avion</label>
+                  <div class="col-xs-8">
+                      <select class="form-control" name="idAvion">
+                      <?php 
+                      foreach ($aviones as $avion) 
+                      {?>
+                          <option><?php echo $avion['idAvion'] ?></option>
+                      <?php
+                      }?>
+                      </select>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-xs-2 col-form-label" for="inputOrigen">Origen</label>
+                  <div class="col-xs-4">
+                      <input type="text" class="form-control" id="inputOrigen" placeholder="" name="origen">
+                  </div>
+                  <label class="col-xs-2 col-form-label" for="inputDestino">Destino</label>
+                  <div class="col-xs-4">
+                      <input type="text" class="form-control" id="inputDestino" placeholder="" name="destino">
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label for="example-date-input" class="col-xs-4 col-form-label">Fecha vuelo</label>
+                  <div class="col-xs-8">
+                    <input class="form-control" type="date" value="2011-08-19" name="fecha">
+                  </div>
+                </div>
+                <div class="form-group row form-inline">
+                    <label class="col-xs-2 col-form-label" for="inputPrecio">Precio</label>
+                    <div class="input-group col-xs-8">
+                        <div class="input-group-addon">€</div>
+                        <input type="text" class="form-control" id="inputPrecio" placeholder="0" name="precio1">
+                        <div class="input-group-addon">.</div>
+                        <input type="text" class="form-control" id="inputPrecio" placeholder="00" name="precio2">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+              <button type="submit" class="btn btn-primary">Guardar</button>
+            </div>
+          </form>
         </div><!-- /.modal-content -->
       </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->

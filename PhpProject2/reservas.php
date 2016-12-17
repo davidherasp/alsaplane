@@ -32,11 +32,14 @@ session_start();
     
     <div class="container">
         <nav class="navbar">
+            <h1>Reservas</h1>
             <button class="btn btn-outline-success float-xs-right" type="button" data-toggle="modal" data-target="#addModal">Añadir</button>
         </nav>
 <?php 
     $modelo = new Modelo();
     $reservas = $modelo->selectReservas();
+    $clientes = $modelo->selectClientes();
+    $vuelos   = $modelo->selectVuelos();
     
     if ($reservas != NULL)
     {
@@ -62,9 +65,38 @@ session_start();
                 <td><?php echo $reserva['precioR']?></td>
                 <td><?php echo $reserva['asiento']?></td>
                 <td>
-                    <a href="<?php echo $urlModificar ?>"><button  name = "boton" value="editar">Modificar</button></a>
+                    <a><button type="button" data-toggle="modal" data-target="#modificar<?php echo $reserva['idVuelo'], $reserva['idCliente'] ?>" value="editar">Modificar</button></a>
                     <a href="<?php echo $urlEliminar ?>"><button  name = "boton" value="eliminar">Eliminar</button></a>
                 </td>
+                
+                <div class="modal fade" id="modificar<?php echo $reserva['idVuelo'], $reserva['idCliente'] ?>" tabindex="-1" role="dialog" aria-labelledby="Modal para añadir" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                        <h4 class="modal-title">Modificar la reserva <?php echo $reserva['idVuelo'], $reserva['idCliente'] ?></h4>
+                      </div>
+                      <form action="modificarReserva.php" method="POST"> 
+                        <div class="modal-body">
+                            <input type="hidden" name="idVuelo" value="<?php echo $reserva['idVuelo'] ?>">
+                            <input type="hidden" name="idCliente" value="<?php echo $reserva['idCliente'] ?>">
+                            <div class="form-group row form-inline">
+                                <label for="inputAsiento" class="col-xs-2 col-form-label">Asiento</label>
+                                <div class="col-xs-10">
+                                    <input type="text" class="form-control" id="inputAsiento" placeholder="0" name="asiento">
+                                </div>
+                            </div>
+                          </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                          <button type="submit" class="btn btn-primary">Guardar</button>
+                        </div>
+                        </form>
+                    </div><!-- /.modal-content -->
+                  </div><!-- /.modal-dialog -->
+                </div><!-- /.modal -->
             <?php    
         }
         ?>
@@ -86,15 +118,57 @@ session_start();
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
-            <h4 class="modal-title">Añadir un empleado</h4>
+            <h4 class="modal-title">Añadir una reserva</h4>
           </div>
-          <div class="modal-body">
-            <p>One fine body&hellip;</p>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary">Save changes</button>
-          </div>
+          <form action="insertReserva.php" method="POST"> 
+            <div class="modal-body">
+                <div class="form-group row">
+                  <label for="inputIdVuelo" class="col-xs-2 col-form-label">ID Vuelo</label>
+                  <div class="col-xs-10">
+                      <select class="form-control" name="idVuelo">
+                      <?php 
+                      foreach ($vuelos as $vuelo) 
+                      {?>
+                          <option><?php echo $vuelo['idVuelo'] ?></option>
+                      <?php
+                      }?>
+                      </select>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label for="inputIdAvion" class="col-xs-4 col-form-label">ID Avion</label>
+                  <div class="col-xs-8">
+                      <select class="form-control" name="idCliente">
+                      <?php 
+                      foreach ($clientes as $cliente) 
+                      {?>
+                          <option><?php echo $cliente['dni'] ?></option>
+                      <?php
+                      }?>
+                      </select>
+                  </div>
+                </div>
+                <div class="form-group row form-inline">
+                    <label class="col-xs-2 col-form-label" for="inputPrecio">Precio</label>
+                    <div class="input-group col-xs-8">
+                        <div class="input-group-addon">€</div>
+                        <input type="text" class="form-control" id="inputPrecio" placeholder="0" name="precio1">
+                        <div class="input-group-addon">.</div>
+                        <input type="text" class="form-control" id="inputPrecio" placeholder="00" name="precio2">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-xs-2 col-form-label" for="inputAsiento">Asiento</label>
+                    <div class="col-xs-10">
+                        <input type="text" class="form-control" id="inputAsiento" placeholder="0" name="asiento">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+              <button type="submit" class="btn btn-primary">Guardar</button>
+            </div>
+          </form>
         </div><!-- /.modal-content -->
       </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->

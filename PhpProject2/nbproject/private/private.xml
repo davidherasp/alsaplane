@@ -3,8 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/xampp/htdocs/PhpProject2/empleados.php</file>
+            <file>file:/C:/xampp/htdocs/PhpProject2/modelo.php</file>
             <file>file:/C:/xampp/htdocs/PhpProject2/aviones.php</file>
+            <file>file:/C:/xampp/htdocs/PhpProject2/modificarAvion.php</file>
+            <file>file:/C:/xampp/htdocs/PhpProject2/vuelos.php</file>
         </group>
     </open-files>
 </project-private>

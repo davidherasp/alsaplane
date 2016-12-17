@@ -32,6 +32,7 @@ session_start();
     
     <div class="container">
         <nav class="navbar">
+            <h1>Empleados</h1>
             <button class="btn btn-outline-success float-xs-right" type="button" data-toggle="modal" data-target="#addModal">Añadir</button>
         </nav>
 <?php 
@@ -75,7 +76,7 @@ session_start();
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                           <span aria-hidden="true">&times;</span>
                         </button>
-                        <h4 class="modal-title">Modificar un empleado</h4>
+                        <h4 class="modal-title">Modificar el empleado <?php echo $empelado['idTrabajador'] ?></h4>
                       </div>
                       <form action="modificarEmpleado.php" method="POST"> 
                         <div class="modal-body">

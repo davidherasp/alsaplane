@@ -134,6 +134,32 @@ class Modelo{
                 }
             }
             
+            public function selectClientes(){
+                $this->open();
+                $consulta="SELECT dni, nombreCli, fechaNacCli, emailCli, tipoCli, password FROM clientes";
+                
+                $rs =  mysqli_query($this->conexion,$consulta);
+                $nfilas = mysqli_num_rows($rs);
+                
+                if($nfilas != 0){
+                    
+                    $clientes = array();
+                    $i=0;
+                    while ($reg=mysqli_fetch_array($rs)){
+                        $clientes[$i]=$reg;
+                        $i++;
+                    }
+                    
+                    $this->close();
+                    return $clientes;
+                
+                }else{
+                        
+                    $this->close();
+                    return NULL;
+                }
+            }
+            
             public function eliminarVuelo($idVuelo)
             {
                 $this->open();
@@ -150,6 +176,39 @@ class Modelo{
                     return NULL;
                 } 
             }  
+            
+            public function insertVuelo($idVuelo, $idAvion, $origen, $destino, $fecha, $precio1, $precio2)
+            {
+                $this->open();
+                
+                $consulta="INSERT INTO vuelos ( idVuelo, idAvion, origen, destino, fechaVuelo, precioV )
+                           VALUES ('".$idVuelo."','".$idAvion."','".$origen."','".$destino."','".$fecha."','".$precio1.".".$precio2."');";
+                
+                $result=mysqli_query($this->conexion,$consulta);
+                $this->close();
+            }
+            
+            public function modificarVuelo($id, $fecha, $precio1, $precio2)
+            {
+                $this->open();
+                
+                if($precio1 == "")
+                {
+                    $consulta="UPDATE vuelos "
+                        . "SET fechaVuelo='".$fecha."' "
+                        . "WHERE idVuelo='".$id."' ";
+                }
+                else
+                {
+                    $consulta="UPDATE vuelos "
+                        . "SET fechaVuelo='".$fecha."', precioV='".$precio1.".".$precio2."' "
+                        . "WHERE idVuelo='".$id."' ";
+                }
+                
+//                echo $consulta;
+                $result=mysqli_query($this->conexion,$consulta);
+                $this->close();
+            }
             
             public function eliminarReserva($idVuelo, $idCliente)
             {
@@ -168,6 +227,30 @@ class Modelo{
                 } 
             }
             
+            public function insertReserva($idVuelo, $idCliente, $precio1, $precio2, $asiento)
+            {
+                $this->open();
+                
+                $consulta="INSERT INTO reservas ( idVuelo, idCliente, precioR, asiento )
+                           VALUES ('".$idVuelo."','".$idCliente."','".$precio1.".".$precio2."','".$asiento."');";
+                
+                $result=mysqli_query($this->conexion,$consulta);
+                $this->close();
+            }
+            
+            public function modificarReserva($idVuelo, $idCliente, $asiento)
+            {
+                $this->open();
+                
+                $consulta="UPDATE reservas "
+                        . "SET asiento='".$asiento."' "
+                        . "WHERE idVuelo='".$idVuelo."' AND idCliente='".$idCliente."';";
+                
+//                echo $consulta;
+                $result=mysqli_query($this->conexion,$consulta);
+                $this->close();
+            }
+            
             public function eliminarAvion($idAvion)
             {
                 $this->open();
@@ -183,6 +266,29 @@ class Modelo{
                 }else{
                     return NULL;
                 } 
+            }
+            
+            public function insertAvion($modelo, $asientos)
+            {
+                $this->open();
+                
+                $consulta="INSERT INTO aviones ( modelo, numAsientos ) 
+                           VALUES ('".$modelo."','".$asientos."');";
+
+                $result=mysqli_query($this->conexion,$consulta);
+                $this->close();
+            }
+            
+            public function modificarAvion($id, $asientos)
+            {
+                $this->open();
+                
+                $consulta="UPDATE aviones "
+                        . "SET numAsientos=".$asientos." "
+                        . "WHERE idAvion='".$id."' ";
+                
+                $result=mysqli_query($this->conexion,$consulta);
+                $this->close();
             }
             
             public function eliminarEmpleado($idTrabajador)

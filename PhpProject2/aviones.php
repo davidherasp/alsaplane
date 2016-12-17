@@ -32,6 +32,7 @@ session_start();
     
     <div class="container">
         <nav class="navbar">
+            <h1>Aviones</h1>
             <button class="btn btn-outline-success float-xs-right" type="button" data-toggle="modal" data-target="#addModal">Añadir</button>
         </nav>
 <?php 
@@ -60,9 +61,37 @@ session_start();
                 <td><?php echo $avion['modelo']?></td>
                 <td><?php echo $avion['numAsientos']?></td>
                 <td>
-                    <a href="<?php echo $urlModificar ?>"><button  name = "boton" value="editar">Modificar</button></a>
+                    <a><button type="button" data-toggle="modal" data-target="#modificar<?php echo $avion['idAvion'] ?>" value="editar">Modificar</button></a>
                     <a href="<?php echo $urlEliminar ?>"><button  name = "boton" value="editar">Eliminar</button></a>
                 </td>
+            </tr>  
+                <div class="modal fade" id="modificar<?php echo $avion['idAvion'] ?>" tabindex="-1" role="dialog" aria-labelledby="Modal para añadir" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                        <h4 class="modal-title">Modificar el avión <?php echo $avion['idAvion'] ?></h4>
+                      </div>
+                      <form action="modificarAvion.php" method="POST"> 
+                        <div class="modal-body">
+                            <input type="hidden" name="id" value="<?php echo $avion['idAvion'] ?>">
+                            <div class="form-group row">
+                                <label class="col-xs-2 col-form-label" for="inputAsientos">Asientos</label>
+                                <div class="col-xs-8">
+                                    <input type="text" class="form-control" id="inputAsientos" placeholder="0" name="asientos">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                          <button type="submit" class="btn btn-primary">Guardar</button>
+                        </div>
+                      </form>
+                    </div><!-- /.modal-content -->
+                  </div><!-- /.modal-dialog -->
+                </div><!-- /.modal -->
             <?php    
         }
         ?>
@@ -84,15 +113,28 @@ session_start();
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
-            <h4 class="modal-title">Añadir un empleado</h4>
+            <h4 class="modal-title">Añadir un avión</h4>
           </div>
+          <form action="insertAvion.php" method="POST"> 
           <div class="modal-body">
-            <p>One fine body&hellip;</p>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary">Save changes</button>
-          </div>
+                <div class="form-group row">
+                  <label for="inputModelo" class="col-xs-2 col-form-label">Modelo</label>
+                  <div class="col-xs-10">
+                      <input type="text" class="form-control" id="inputModelo" placeholder="" name="modelo">
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label for="inputAsientos" class="col-xs-4 col-form-label">Num. asientos</label>
+                  <div class="col-xs-8">
+                      <input type="text" class="form-control" id="inputAsientos" placeholder="0" name="asientos">
+                  </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+              <button type="submit" class="btn btn-primary">Guardar</button>
+            </div>
+          </form>
         </div><!-- /.modal-content -->
       </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
