@@ -331,5 +331,25 @@ class Modelo{
                 $result=mysqli_query($this->conexion,$consulta);
                 $this->close();
             }
+            
+            public function loginAdmin($nombre,$clave){
+                
+                $this->open();
+                $consulta="SELECT * FROM administrador WHERE (user LIKE '$nombre') and (password LIKE '$clave')";
+                
+                $rs =  mysqli_query($this->conexion,$consulta);
+                if(mysqli_num_rows($rs) != 0)
+                {
+                    $admin = mysqli_fetch_array($rs);
+                    $this->close();
+                    return $admin;
+                }
+                else
+                {
+                    $this->close();
+                    return NULL;
+                }
+            
+            }
 }//class modelo
 

@@ -1,6 +1,11 @@
 <?php
 include("modelo.php"); //Con la ruta donde esta
 session_start();
+
+if (!isset($_SESSION['user']))
+{
+    header('Location:login.php');
+}
 ?> 
 
 <!DOCTYPE html>
@@ -24,7 +29,7 @@ session_start();
         <div class="float-xs-right">
           <ul class="nav navbar-nav">
             <li class="btn"><i class="material-icons">account_circle</i>Admin</li>
-            <li class="btn"><i class="material-icons">highlight_off</i>Logout</li>
+            <li class="btn"><a href="cerrarSesion.php"><i class="material-icons">highlight_off</i>Logout</a></li>
           </ul>
         </div>
       </div>

@@ -25,14 +25,14 @@ $modelo = new Modelo();
             <div class="row">
             <div class="card card-block" style="width: 18rem; float: none; margin: 0 auto;">
                 <h4 class="card-title">Login admin</h4>
-                <form>
+                <form action="iniciarSesion.php" method="POST">
                     <div class="form-group">
                       <label for="formGroupInput">Nombre admin</label>
-                      <input type="text" class="form-control" id="formGroupInput" placeholder="Usuario">
+                      <input type="text" class="form-control" id="formGroupInput" placeholder="Usuario" name="nombre">
                     </div>
                     <div class="form-group">
                       <label for="formGroupInput2">Contraseña admin</label>
-                      <input type="password" class="form-control" id="formGroupInput2" placeholder="Contraseña">
+                      <input type="password" class="form-control" id="formGroupInput2" placeholder="Contraseña" name="clave">
                     </div>
                     <button type="submit" class="btn btn-primary">Introducir</button>
                 </form>
