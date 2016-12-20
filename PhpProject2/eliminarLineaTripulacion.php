@@ -3,19 +3,19 @@ session_start();
 include("modelo.php");
 
 $idVuelo = $_GET['idVuelo'];
+$idTrabajador = $_GET['idTrabajador'];
 
-echo '--->'.$idVuelo;
 $modelo = new Modelo();
-$result = $modelo->eliminarVuelo($idVuelo);
+$result = $modelo->eliminarLineaTripulacion($idVuelo, $idTrabajador);
 
 if($result != NULL){
     echo ("<SCRIPT LANGUAGE='JavaScript'>
-                    window.alert('Se ha eliminado el vuelo')
+                    window.alert('Se ha eliminado el tripulante')
                     window.location.href='vuelos.php';
            </SCRIPT>");
 }else{
     echo ("<SCRIPT LANGUAGE='JavaScript'>
-                    window.alert('Se ha producido un error al eliminar el vuelo. Comprueba que no haya ninguna reserva con este ID de vuelo')
+                    window.alert('Se ha producido un error al eliminar el tripulante')
                     window.location.href='vuelos.php';
            </SCRIPT>");
 }

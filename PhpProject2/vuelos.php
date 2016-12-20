@@ -15,7 +15,7 @@ if (!isset($_SESSION['user']))
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
-
+  
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/css/bootstrap.min.css" integrity="sha384-AysaV+vQoT3kOAXZkl02PThvDr8HYKPZhNT5h/CXfBThSRXQ6jW5DO2ekP5ViFdi" crossorigin="anonymous">
   
@@ -42,8 +42,9 @@ if (!isset($_SESSION['user']))
         </nav>
 <?php 
     $modelo = new Modelo();
-    $vuelos = $modelo->selectVuelos();
-    $aviones= $modelo->selectAviones();
+    $vuelos    = $modelo->selectVuelos();
+    $aviones   = $modelo->selectAviones();
+    $empleados = $modelo->selectEmpleados();
     
     if ($vuelos != NULL)
     {
@@ -57,6 +58,7 @@ if (!isset($_SESSION['user']))
                 <th>Destino</th>
                 <th>Fecha</th>
                 <th>Precio</th>
+                <th>Tripulación</th>
                 <th>Opciones</th>
             </tr>
         </thead>
@@ -72,6 +74,23 @@ if (!isset($_SESSION['user']))
                 <td><?php echo $vuelo['destino']?></td>
                 <td><?php echo $vuelo['fechaVuelo']?></td>
                 <td><?php echo $vuelo['precioV']?></td>
+                <td>
+                    <ul class="list-group">
+                <?php 
+                $tripulacion = $modelo->selectTripulacion($vuelo['idVuelo']);
+                if( $tripulacion != null )
+                {
+                    foreach ($tripulacion as $trip)
+                    {?>
+                        <li class="list-group-item"><?php echo $trip['nombreTra']."(".$trip['rolTra'].")" ?></li>
+                    <?php
+                    }
+                }else{?>
+                        <li class="list-group-item"> No hay tripulación establecida aún </li>
+                <?php
+                }?>
+                    </ul>
+                </td>
                 <td>
                     <a><button type="button" data-toggle="modal" data-target="#modificar<?php echo $vuelo['idVuelo'] ?>" value="editar">Modificar</button></a>
                     <a href="<?php echo $urlEliminar ?>"><button  name = "boton" value="editar">Eliminar</button></a>
@@ -104,6 +123,20 @@ if (!isset($_SESSION['user']))
                                     <div class="input-group-addon">.</div>
                                     <input type="text" class="form-control" id="inputPrecio" placeholder="00" name="precio2">
                                 </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleSelect2">Tripulacion</label>
+                                <ul class="list-group">
+                                  <?php foreach ($empleados as $empleado)
+                                  {
+                                    $urlEliminar2 = "eliminarLineaTripulacion.php?idVuelo=".$vuelo['idVuelo']."&idTrabajador=".$empleado['idTrabajador'];?>
+                                    <li class="list-group-item">
+                                        <input type="checkbox" class="form-check-input" name="tripulacion[]" value="<?php echo $empleado['idTrabajador'] ?>" ><?php echo $empleado['nombreTra']." ".$empleado['rolTra'] ?>
+                                        <a href="<?php echo $urlEliminar2 ?>"><button type="button">Eliminar</button></a>
+                                    </li>
+                                  <?php
+                                  }?>
+                                </ul>
                             </div>
                           </div>
                         <div class="modal-footer">
@@ -182,6 +215,18 @@ if (!isset($_SESSION['user']))
                         <div class="input-group-addon">.</div>
                         <input type="text" class="form-control" id="inputPrecio" placeholder="00" name="precio2">
                     </div>
+                </div>
+                <div class="form-group">
+                    <label for="exampleSelect2">Tripulacion</label>
+                    <ul class="list-group">
+                      <?php foreach ($empleados as $empleado)
+                      {?>
+                        <li class="list-group-item">
+                            <input type="checkbox" class="form-check-input" name="tripulacion[]" value="<?php echo $empleado['idTrabajador'] ?>" ><?php echo $empleado['nombreTra']." ".$empleado['rolTra'] ?> 
+                        </li>
+                      <?php
+                      }?>
+                    </ul>
                 </div>
             </div>
             <div class="modal-footer">

@@ -160,14 +160,59 @@ class Modelo{
                 }
             }
             
+            public function selectTripulacion($idVuelo)
+            {
+                $this->open();
+                $consulta=" SELECT idTrabajador, nombreTra, rolTra FROM trabajadores 
+                            WHERE idTrabajador IN (SELECT idTrabajador FROM lineatripulacion 
+                            WHERE idVuelo= '$idVuelo'); ";
+                
+                $rs =  mysqli_query($this->conexion,$consulta);
+                $nfilas = mysqli_num_rows($rs);
+                
+                if($nfilas != 0){
+                    
+                    $result = array();
+                    $i=0;
+                    while ($reg=mysqli_fetch_array($rs)){
+                        $result[$i]=$reg;
+                        $i++;
+                    }
+                    
+                    $this->close();
+                    return $result;
+                }else{
+                        
+                    $this->close();
+                    return NULL;
+                }
+            }
+            
+            public function eliminarLineaTripulacion($idVuelo, $idTrabajador)
+            {
+                $this->open();
+                
+                $consulta = "DELETE FROM lineatripulacion WHERE lineatripulacion.idTrabajador = $idTrabajador AND lineatripulacion.idVuelo = '$idVuelo'";
+                
+                $result=mysqli_query($this->conexion,$consulta);
+                $this->close();
+
+                if ($result){
+                    return $result;
+                }else{
+                    return NULL;
+                }
+            }
+            
             public function eliminarVuelo($idVuelo)
             {
                 $this->open();
                 
-                $consulta="DELETE FROM VUELOS WHERE (idVuelo LIKE '$idVuelo')";
+                $consulta1="DELETE FROM lineatripulacion WHERE lineatripulacion.idVuelo = '$idVuelo'";
+                $consulta2="DELETE FROM VUELOS WHERE (idVuelo LIKE '$idVuelo')";
                 
-                
-                $result=mysqli_query($this->conexion,$consulta);
+                $result=mysqli_query($this->conexion,$consulta1);
+                $result=mysqli_query($this->conexion,$consulta2);
                 $this->close();
                 
                 if ($result){
@@ -177,20 +222,40 @@ class Modelo{
                 } 
             }  
             
-            public function insertVuelo($idVuelo, $idAvion, $origen, $destino, $fecha, $precio1, $precio2)
+            public function insertVuelo($idVuelo, $idAvion, $origen, $destino, $fecha, $precio1, $precio2, $tripulacion)
             {
                 $this->open();
-                
+
                 $consulta="INSERT INTO vuelos ( idVuelo, idAvion, origen, destino, fechaVuelo, precioV )
                            VALUES ('".$idVuelo."','".$idAvion."','".$origen."','".$destino."','".$fecha."','".$precio1.".".$precio2."');";
                 
                 $result=mysqli_query($this->conexion,$consulta);
+                
+                foreach( $tripulacion as $tripulante)
+                {
+                    $idTrabajador = $tripulante['idTrabajador'];
+                    $consulta2=" INSERT INTO lineatripulacion ( idTrabajador, idVuelo ) "
+                             . " VALUES ('".$idTrabajador."', '".$idVuelo."' )          ";
+                    
+                    //echo $consulta2;
+                    mysqli_query($this->conexion,$consulta2);
+                }
+                
                 $this->close();
             }
             
-            public function modificarVuelo($id, $fecha, $precio1, $precio2)
+            public function modificarVuelo($id, $fecha, $precio1, $precio2, $tripulacion)
             {
                 $this->open();
+                
+                foreach( $tripulacion as $tripulante)
+                {
+                    $idTrabajador = $tripulante['idTrabajador'];
+                    $consulta2=" INSERT INTO lineatripulacion ( idTrabajador, idVuelo ) "
+                             . " VALUES ('".$idTrabajador."', '".$id."' )          ";
+
+                    mysqli_query($this->conexion,$consulta2);
+                }
                 
                 if($precio1 == "")
                 {
